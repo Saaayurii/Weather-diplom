@@ -1,26 +1,26 @@
 <p align="center">
     <a href="https://app.ocula.io">
-        <img src="https://github.com/andrewcourtice/ocula/raw/master/client/src/assets/images/logo/logo-192.svg" alt="Ocula"/>
+        <img src="https://github.com/andrewcourtice/ocula/raw/master/client/src/assets/images/logo/logo-192.svg" alt="Погода"/>
     </a>
 </p>
 
-# Ocula
-The free and open-source progressive weather app
+# Погода
+Бесплатное прогрессивное погодное приложение с открытым исходным кодом
 
 <!-- TOC depthfrom:2 -->
 
-- [About](#about)
-- [Features](#features)
-- [Philosophy](#philosophy)
-- [Donating](#donating)
-- [Credits](#credits)
+- [О приложении](#о-приложении)
+- [Возможности](#возможности)
+- [Философия](#философия)
+- [Поддержка](#поддержка)
+- [Благодарности](#благодарности)
 
 <!-- /TOC -->
 
-## About
-Ocula is a weather app built entirely using modern web standards in an attempt to create a great looking weather app that anyone can use on any device while also providing a simple PWA template for developers to build upon.
+## О приложении
+Погода - это приложение, полностью созданное с использованием современных веб-стандартов, целью которого является создание красивого погодного приложения, которым может пользоваться любой человек на любом устройстве, а также предоставление простого шаблона PWA для разработчиков.
 
-I set out to create Ocula as a replacement for my favourite weather app - Pocket Weather, which was unfortunately shut down at the end of 2019 due to high maintenance costs.
+Это приложение было создано в качестве замены любимого погодного приложения - Pocket Weather, которое, к сожалению, было закрыто в конце 2019 года из-за высоких затрат на обслуживание.
 
 <p align="center">
     <img src="https://user-images.githubusercontent.com/11718453/93705532-95b09a80-fb61-11ea-89d9-e72e6146aea2.png" width="192" />
@@ -33,40 +33,40 @@ I set out to create Ocula as a replacement for my favourite weather app - Pocket
     <img src="https://user-images.githubusercontent.com/11718453/93705522-87fb1500-fb61-11ea-8b2d-cefa59c9c712.png" width="192" />
 </p>
 
-## Features
-- No location restrictions - available worldwide
-- Daily forecast for up to 8 days
-- Hourly forecast data for up to 24 hours
-- Trend charts for hourly temp, rainfall and wind
-- Ocean tide information with tide height trend chart
-- Interactive weather maps with 6 different map types (radar, precipitation, temp, cloud, wind, pressure)
-- Frame-by-frame playback for radar images to visualise incoming rain
-- Dark/Light Themes. Default theme changes based on current time of day
-- Options to reorder or hide forecast sections, set your prefferred map type, units and more
-- Open-source, privacy friendly, and best of all - free
+## Возможности
+- Без географических ограничений - доступно по всему миру
+- Ежедневный прогноз на срок до 8 дней
+- Почасовой прогноз на срок до 24 часов
+- Графики трендов для почасовой температуры, осадков и ветра
+- Информация о океанских приливах с графиком высоты прилива
+- Интерактивные погодные карты с 6 различными типами (радар, осадки, температура, облачность, ветер, давление)
+- Покадровое воспроизведение радарных изображений для визуализации приближающегося дождя
+- Темная/Светлая темы. Тема по умолчанию меняется в зависимости от текущего времени суток
+- Возможность изменения порядка или скрытия разделов прогноза, выбора предпочитаемого типа карты, единиц измерения и многое другое
+- С открытым исходным кодом, конфиденциально и, что самое главное - бесплатно
 
-## Philosophy
-The goal of this project is to satisfy the following:
+## Философия
+Цель данного проекта - удовлетворить следующим требованиям:
 
-- Must be open-source and freely available to all.
-- Must be ad-free, subscription-free and any revenue generated to be used for ongoing maintenance costs.
-- Must be built entirely using free (or freemium) services/assets (including hosting, api's, graphics etc.).
-- Must be fast, lightweight, accessible and beautiful.
+- Должен быть с открытым исходным кодом и свободно доступен для всех.
+- Должен быть без рекламы, без подписок, а любые полученные доходы должны использоваться для текущих расходов на обслуживание.
+- Должен быть полностью построен с использованием бесплатных (или freemium) сервисов/ресурсов (включая хостинг, API, графику и т.д.).
+- Должен быть быстрым, легковесным, доступным и красивым.
 
-It is my hope that by satisfying the above conditions Ocula can be a weather app for all to enjoy without being bombarded with ads and signups. 
+Надежда заключается в том, что, выполняя вышеперечисленные условия, это приложение может стать погодным приложением для всех, без навязчивой рекламы и регистраций.
 
-However, as a result of satisfying the above conditions it is therefore not sustainable without some form of monetisation. For the most part I use free tiers of various services to ensure the app remains free but with increased usage I will personally incur the cost and may be forced to shutdown the service should costs become burdensome. For this reason I ask that you consider one of the following:
+Однако в результате выполнения вышеуказанных условий проект не является устойчивым без какой-либо формы монетизации. В основном используются бесплатные тарифы различных сервисов, чтобы приложение оставалось бесплатным, но с увеличением использования могут возникнуть расходы, и сервис может быть вынужден закрыться, если затраты станут обременительными. По этой причине просьба рассмотреть один из следующих вариантов:
 
-- If you like Ocula and use it as your everyday weather app I ask that you please consider contributing a regular small donation to the project (see [donating](#donating)) to help ease the cost of maintenance.
-- If you are a developer you are free to fork this repository and host your own copy in accordance with the MIT licence.
+- Если вам нравится это приложение и вы используете его как свое повседневное погодное приложение, пожалуйста, рассмотрите возможность регулярного небольшого пожертвования на проект (см. [поддержка](#поддержка)), чтобы помочь покрыть расходы на обслуживание.
+- Если вы разработчик, вы можете свободно форкнуть этот репозиторий и разместить свою собственную копию в соответствии с лицензией MIT.
 
-## Donating
-Please consider donating to the ongoing development of this project by visiting my [Patreon page](https://www.patreon.com/ocula).
+## Поддержка
+Пожалуйста, рассмотрите возможность пожертвования на дальнейшую разработку этого проекта, посетив страницу [Patreon](https://www.patreon.com/ocula).
 
-## Credits
-- Weather forecast provided by [OpenWeatherMap](https://openweathermap.org).
-- Tidal information provided by [WorldTides](https://www.worldtides.info).
-- Precipitation map tiles provided by [RainViewer](https://www.rainviewer.com).
-- Maps and geocoding services provided by [MapBox](https://www.mapbox.com).
-- Logo designed by [Ethan Roxburgh](https://github.com/ethanroxburgh).
-- Icons provided by [Remix Icons](https://remixicon.com).
+## Благодарности
+- Прогноз погоды предоставлен [OpenWeatherMap](https://openweathermap.org).
+- Информация о приливах предоставлена [WorldTides](https://www.worldtides.info).
+- Карты осадков предоставлены [RainViewer](https://www.rainviewer.com).
+- Карты и сервисы геокодирования предоставлены [MapBox](https://www.mapbox.com).
+- Логотип разработан [Ethan Roxburgh](https://github.com/ethanroxburgh).
+- Иконки предоставлены [Remix Icons](https://remixicon.com).
