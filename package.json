@@ -1,7 +1,6 @@
 {
-    "name": "@ocula/app",
-    "repository": "https://github.com/andrewcourtice/ocula.git",
-    "author": "Andrew Courtice",
+    "name": "weather",
+    "author": "FGBNU IPII",
     "description": "The free and open-source progressive weather app",
     "license": "MIT",
     "private": true,
