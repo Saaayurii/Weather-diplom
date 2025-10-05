@@ -1,3 +1,0 @@
-# Backers
-
-Kerry Tarrant
