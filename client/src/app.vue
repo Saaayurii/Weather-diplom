@@ -23,6 +23,7 @@ import ROUTES from './constants/core/routes';
 import LocationModal from './components/modals/location.vue';
 
 import setThemeMeta from './helpers/set-theme-meta';
+import { useI18n } from './i18n';
 
 import {
     defineComponent,
@@ -36,30 +37,6 @@ import {
 } from './store';
 import PHASE from './enums/forecast/phase';
 
-const routes = [
-    {
-        label: 'Forecast',
-        icon: 'sun-line',
-        route: {
-            name: ROUTES.forecast.index
-        }
-    },
-    {
-        label: 'Maps',
-        icon: 'road-map-line',
-        route: {
-            name: ROUTES.maps.index
-        }
-    },
-    {
-        label: 'Settings',
-        icon: 'equalizer-line',
-        route: {
-            name: ROUTES.settings.index
-        }
-    }
-];
-
 const PHASE_CLASS = {
     [PHASE.day]: 'phase--day',
     [PHASE.night]: 'phase--night'
@@ -72,13 +49,39 @@ export default defineComponent({
     },
 
     setup() {
+        const { t } = useI18n();
+
+        const routes = computed(() => [
+            {
+                label: t('nav.forecast'),
+                icon: 'sun-line',
+                route: {
+                    name: ROUTES.forecast.index
+                }
+            },
+            {
+                label: t('nav.maps'),
+                icon: 'road-map-line',
+                route: {
+                    name: ROUTES.maps.index
+                }
+            },
+            {
+                label: t('nav.settings'),
+                icon: 'equalizer-line',
+                route: {
+                    name: ROUTES.settings.index
+                }
+            }
+        ]);
+
         watch(() => theme.value.core, ({ colour }) => setThemeMeta(colour));
 
         const appClass = computed(() => [
             PHASE_CLASS[phase.value],
             theme.value.core.class
         ]);
-        
+
         return {
             appClass,
             routes

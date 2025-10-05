@@ -1,4 +1,5 @@
 import MAP from '../../enums/maps/map';
+import { useI18n } from '../../i18n';
 
 import type {
     Formatted,
@@ -145,3 +146,116 @@ export default {
         ]
     }
 } as Record<MAP, IMap>;
+
+// Function to get localized map labels and legends
+export function getLocalizedMaps(forecast: Formatted<IMappedForecast>, format: IFormatter, smooth: boolean = true, snow: boolean = true) {
+    const { t } = useI18n();
+
+    return {
+        [MAP.radar]: {
+            label: t('maps.types.radar'),
+            icon: 'radar-line',
+            layers: getRadarLayers(forecast, format, smooth, snow),
+            legend: [
+                {
+                    colour: '#8EE',
+                    label: t('maps.legend.lightDrizzle')
+                },
+                {
+                    colour: '#09C',
+                    label: t('maps.legend.drizzle')
+                },
+                {
+                    colour: '#07A',
+                    label: t('maps.legend.lightRain')
+                },
+                {
+                    colour: '#058',
+                    label: t('maps.legend.lightRain')
+                },
+                {
+                    colour: '#FE0',
+                    label: t('maps.legend.rain')
+                },
+                {
+                    colour: '#FA0',
+                    label: t('maps.legend.rain')
+                },
+                {
+                    colour: '#F70',
+                    label: t('maps.legend.heavyRain')
+                },
+                {
+                    colour: '#F40',
+                    label: t('maps.legend.heavyRain')
+                },
+                {
+                    colour: '#E00',
+                    label: t('maps.legend.thunderstorm')
+                },
+                {
+                    colour: '#900',
+                    label: t('maps.legend.thunderstorm')
+                },
+                {
+                    colour: '#FAF',
+                    label: t('maps.legend.hail')
+                },
+                {
+                    colour: '#F7F',
+                    label: t('maps.legend.hail')
+                }
+            ]
+        },
+        [MAP.precipitation]: {
+            label: t('maps.types.precipitation'),
+            icon: 'drop-line',
+            layers: [
+                {
+                    id: MAP.precipitation,
+                    url: getOwmTileUrl('precipitation_new')
+                }
+            ]
+        },
+        [MAP.temperature]: {
+            label: t('maps.types.temperature'),
+            icon: 'temp-cold-line',
+            layers: [
+                {
+                    id: MAP.temperature,
+                    url: getOwmTileUrl('temp_new')
+                }
+            ]
+        },
+        [MAP.cloud]: {
+            label: t('maps.types.clouds'),
+            icon: 'cloudy-line',
+            layers: [
+                {
+                    id: MAP.cloud,
+                    url: getOwmTileUrl('clouds_new')
+                }
+            ]
+        },
+        [MAP.wind]: {
+            label: t('maps.types.wind'),
+            icon: 'windy-line',
+            layers: [
+                {
+                    id: MAP.wind,
+                    url: getOwmTileUrl('wind_new')
+                }
+            ]
+        },
+        [MAP.pressure]: {
+            label: t('maps.types.pressure'),
+            icon: 'swap-line',
+            layers: [
+                {
+                    id: MAP.pressure,
+                    url: getOwmTileUrl('pressure_new')
+                }
+            ]
+        }
+    } as Record<MAP, IMap>;
+}

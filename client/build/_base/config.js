@@ -1,4 +1,14 @@
 import path from 'path';
+import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const require = createRequire(import.meta.url);
+
+// Загрузка переменных окружения из .env файла
+const dotenv = require('dotenv');
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
@@ -8,10 +18,9 @@ import {
     CleanWebpackPlugin
 } from 'clean-webpack-plugin';
 
-import { 
-    VueLoaderPlugin 
+import {
+    VueLoaderPlugin
 } from 'vue-loader';
-
 
 import webpack from 'webpack';
 

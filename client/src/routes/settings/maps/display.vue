@@ -1,15 +1,15 @@
 <template>
-    <settings-layout class="route settings-maps-display" title="Display" :back-route="backRoute">
+    <settings-layout class="route settings-maps-display" :title="t('settings.maps.display')" :back-route="backRoute">
         <div class="settings-maps-display__options">
-            <block title="Zoom">
+            <block :title="t('settings.maps.zoom')">
                 <template #secondary>{{ zoom }}</template>
                 <input class="settings-maps-display__slider" type="range" min="1" max="12" step="1" v-model.number="zoom">
             </block>
-            <block class="margin__top--large" title="Pitch">
+            <block class="margin__top--large" :title="t('settings.maps.pitch')">
                 <template #secondary>{{ pitch }} &deg;</template>
                 <input class="settings-maps-display__slider" type="range" min="0" max="85" step="5" v-model.number="pitch">
             </block>
-            <block class="margin__top--large" title="Preview">
+            <block class="margin__top--large" :title="t('settings.maps.preview')">
                 <mapbox-map class="settings-maps-display__map"
                     :latitude="location.latitude"
                     :longitude="location.longitude"
@@ -25,6 +25,7 @@
 
 <script lang="ts">
 import ROUTES from '../../../constants/core/routes';
+import { useI18n } from '../../../i18n';
 
 import SettingsLayout from '../../../components/layouts/settings.vue';
 
@@ -49,12 +50,14 @@ import type {
 } from '../../../types/storage';
 
 export default defineComponent({
-    
+
     components: {
         SettingsLayout
     },
 
     setup() {
+        const { t } = useI18n();
+
         const backRoute = {
             name: ROUTES.settings.index
         };
@@ -83,6 +86,7 @@ export default defineComponent({
         const pitch = computed(getMapsComputed('pitch'));
 
         return {
+            t,
             backRoute,
             location,
             theme,

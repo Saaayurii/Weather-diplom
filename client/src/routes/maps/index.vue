@@ -12,7 +12,7 @@
                             <loader v-if="status.loading"/>
                         </div>
                     </icon-button>
-                    <icon-button icon="focus-3-line" v-tooltip:left="'Recentre'" @click.native="recentre"></icon-button>
+                    <icon-button icon="focus-3-line" v-tooltip:left="t('maps.controls.recentre')" @click.native="recentre"></icon-button>
                 </container>
             </div>
         </div>
@@ -70,7 +70,8 @@
 
 <script lang="ts">
 import MAP from '../../enums/maps/map';
-import MAPS from '../../constants/maps/maps';
+import { getLocalizedMaps } from '../../constants/maps/maps';
+import { useI18n } from '../../i18n';
 
 import WeatherActions from '../../components/weather/actions.vue';
 import MapsDrawer from '../../components/drawers/maps.vue';
@@ -112,8 +113,9 @@ export default defineComponent({
         }
 
     },
-    
+
     setup(props) {
+        const { t } = useI18n();
         const mapboxMap = ref(null);
 
         let moveHandle = null;
@@ -130,6 +132,12 @@ export default defineComponent({
         const settings = computed(() => state.settings);
 
         const map = computed(() => {
+            if (!forecast.value) {
+                return { layers: [] };
+            }
+
+            const MAPS = getLocalizedMaps(forecast.value, format.value, state.settings.maps.smoothing, true);
+
             let {
                 layers,
                 ...other
@@ -250,6 +258,7 @@ export default defineComponent({
         }
 
         return {
+            t,
             theme,
             forecast,
             settings,

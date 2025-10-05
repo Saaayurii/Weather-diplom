@@ -1,13 +1,13 @@
 <template>
     <div class="weather-actions" :class="actionsClass" layout="row center-justify">
-        <icon-button class="weather-actions__action weather-actions__action--location" icon="map-pin-line" v-tooltip:right="'Set location'" @click="setLocation">
+        <icon-button class="weather-actions__action weather-actions__action--location" icon="map-pin-line" v-tooltip:right="t('location.setLocation')" @click="setLocation">
             <div v-if="location">{{ location.shortName }}</div>
-            <div v-else>Unknown</div>
+            <div v-else>{{ t('location.unknown') }}</div>
         </icon-button>
         <div self="size-x1">
             <slot></slot>
         </div>
-        <icon-button class="weather-actions__action weather-actions__action--update" icon="refresh-line" @click="update(true)" v-tooltip:left="'Update'"></icon-button>
+        <icon-button class="weather-actions__action weather-actions__action--update" icon="refresh-line" @click="update(true)" v-tooltip:left="t('location.update')"></icon-button>
     </div>
 </template>
 
@@ -15,6 +15,7 @@
 import STATUS from '../../enums/core/status';
 
 import applicationController from '../../controllers/application';
+import { useI18n } from '../../i18n';
 
 import {
     defineComponent,
@@ -27,8 +28,9 @@ import {
 } from '../../store';
 
 export default defineComponent({
-   
+
     setup() {
+        const { t } = useI18n();
         const {
             setLocation
         } = applicationController;
@@ -37,6 +39,7 @@ export default defineComponent({
         const actionsClass = computed(() => state.status === STATUS.loading && 'weather-actions--loading');
 
         return {
+            t,
             location,
             setLocation,
             update,

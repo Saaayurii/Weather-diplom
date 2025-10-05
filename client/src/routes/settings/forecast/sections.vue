@@ -1,5 +1,5 @@
 <template>
-    <settings-layout class="route settings-sections" title="Sections" :back-route="backRoute">
+    <settings-layout class="route settings-sections" :title="t('settings.forecast.sections')" :back-route="backRoute">
         <transition-group tag="div" name="sections" class="settings-sections__sections menu">
             <div class="settings-sections__section menu-item" layout="row center-justify" v-for="(section, index) in sections" :key="section.type">
                 <div class="text--truncate margin__right--x-small" self="size-x1">{{ section.label }}</div>
@@ -13,7 +13,8 @@
 
 <script lang="ts">
 import ROUTES from '../../../constants/core/routes';
-import FORECAST_SECTIONS from '../../../constants/forecast/sections';
+import FORECAST_SECTION from '../../../enums/forecast/section';
+import { useI18n } from '../../../i18n';
 
 import SettingsLayout from '../../../components/layouts/settings.vue';
 
@@ -29,25 +30,32 @@ import {
 } from '../../../store';
 
 export default defineComponent({
-    
+
     components: {
         SettingsLayout
     },
 
     setup() {
+        const { t } = useI18n();
+
         const backRoute = {
             name: ROUTES.settings.index
         };
 
         const sections = computed(() => {
             return state.settings.forecast.sections.map(section => {
-                const {
-                    label
-                } = FORECAST_SECTIONS[section.type];
+                // Map section type to translation key
+                const labelMap = {
+                    [FORECAST_SECTION.dailyForecast]: 'forecast.sections.dailyForecast',
+                    [FORECAST_SECTION.hourlyForecast]: 'forecast.sections.hourlyForecast',
+                    [FORECAST_SECTION.today]: 'forecast.sections.today',
+                    [FORECAST_SECTION.uvIndex]: 'forecast.sections.uvIndex',
+                    [FORECAST_SECTION.tides]: 'forecast.sections.tides'
+                };
 
                 return {
                     ...section,
-                    label
+                    label: t(labelMap[section.type] || section.type)
                 };
             })
         });
@@ -57,6 +65,7 @@ export default defineComponent({
         }
 
         return {
+            t,
             backRoute,
             sections,
             moveSection,

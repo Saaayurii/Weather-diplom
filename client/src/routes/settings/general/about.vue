@@ -1,51 +1,52 @@
 <template>
-    <settings-layout class="route settings-about" title="About" :back-route="backRoute">
+    <settings-layout class="route settings-about" :title="t('settings.general.about')" :back-route="backRoute">
         <div class="settings-about__body">
             <div class="settings-about__header">
                 <img class="settings-about__logo" :src="logo" alt="Ocula">
                 <h1 class="settings-about__title">{{ manifest.title }}</h1>
-                <div class="settings-about__subtitle">{{ manifest.description }}</div>
+                <div class="settings-about__subtitle">{{ t('settings.general.description') }}</div>
             </div>
-            <block class="settings-about__block" title="Details">
+            <block class="settings-about__block" :title="t('settings.general.details')">
                 <div class="settings-about__details-grid">
-                    <strong>Version</strong>
+                    <strong>{{ t('settings.general.version') }}</strong>
                     <div>{{ manifest.version }}</div>
-                    <strong>Author</strong>
+                    <strong>{{ t('settings.general.author') }}</strong>
                     <div>{{ manifest.author }}</div>
-                    <strong>Licence</strong>
+                    <strong>{{ t('settings.general.license') }}</strong>
                     <div>{{ manifest.license }}</div>
-                    <strong>Source</strong>
-                    <a :href="manifest.repository" target="_blank">Github</a>
+                    <strong>{{ t('settings.general.source') }}</strong>
+                    <a :href="manifest.repository" target="_blank">{{ t('settings.general.github') }}</a>
                 </div>
             </block>
-            <block class="settings-about__block" title="Attribution">
+            <block class="settings-about__block" :title="t('settings.general.attribution')">
                 <div class="settings-about__details-grid">
-                    <strong>Forecast Data</strong>
+                    <strong>{{ t('settings.general.forecastData') }}</strong>
                     <a href="https://openweathermap.org" target="_blank">Open Weather Maps</a>
-                    <strong>Tide Data</strong>
+                    <strong>{{ t('settings.general.tideData') }}</strong>
                     <a href="https://www.worldtides.info" target="_blank">World Tides</a>
-                    <strong>Maps/Geocoding</strong>
+                    <strong>{{ t('settings.general.mapsGeocoding') }}</strong>
                     <a href="https://www.mapbox.com" target="_blank">Mapbox</a>
-                    <strong>Radar Imagery</strong>
+                    <strong>{{ t('settings.general.radarImagery') }}</strong>
                     <a href="https://www.rainviewer.com" target="_blank">RainViewer</a>
-                    <strong>Logo Design</strong>
+                    <strong>{{ t('settings.general.logoDesign') }}</strong>
                     <a href="https://github.com/ethanroxburgh" target="_blank">Ethan Roxburgh</a>
-                    <strong>Icons</strong>
+                    <strong>{{ t('settings.general.icons') }}</strong>
                     <a href="https://remixicon.com" target="_blank">Remix Icons</a>
                 </div>
             </block>
-            <block class="settings-about__block" title="Sponsors">
+            <block class="settings-about__block" :title="t('settings.general.sponsors')">
                 <div>Kerry Tarrant</div>
             </block>
             <div class="margin__top--large text--centre">
                 <small class="text--meta">Psalm 147:8</small>
             </div>
         </div>
-    </settings-layout>   
+    </settings-layout>
 </template>
 
 <script lang="ts">
 import ROUTES from '../../../constants/core/routes';
+import { useI18n } from '../../../i18n';
 
 import SettingsLayout from '../../../components/layouts/settings.vue';
 
@@ -63,11 +64,14 @@ export default defineComponent({
     },
 
     setup() {
+        const { t } = useI18n();
+
         const backRoute = {
             name: ROUTES.settings.index
         };
 
         return {
+            t,
             backRoute,
             logo,
             manifest

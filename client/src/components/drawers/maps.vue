@@ -16,19 +16,33 @@
 import MAP from '../../enums/maps/map';
 
 import DRAWERS from '../../constants/core/drawers';
-import MAPS from '../../constants/maps/maps';
+import { getLocalizedMaps } from '../../constants/maps/maps';
 import ROUTES from '../../constants/core/routes';
 
 import {
     defineComponent,
-    ref
+    ref,
+    computed
 } from 'vue';
 
+import {
+    forecast,
+    format,
+    state
+} from '../../store';
+
 export default defineComponent({
-    
+
     setup() {
         const id = DRAWERS.maps;
         const drawer = ref(null);
+
+        const maps = computed(() => {
+            if (!forecast.value) {
+                return {};
+            }
+            return getLocalizedMaps(forecast.value, format.value, state.settings.maps.smoothing, true);
+        });
 
         function getRoute(type: MAP) {
             return {
@@ -42,7 +56,7 @@ export default defineComponent({
         return {
             id,
             drawer,
-            maps: MAPS,
+            maps,
             getRoute
         };
     }

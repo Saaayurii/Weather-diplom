@@ -1,5 +1,5 @@
 <template>
-    <settings-layout class="route settings-themes" title="Themes" :back-route="backRoute">
+    <settings-layout class="route settings-themes" :title="t('settings.theme.title')" :back-route="backRoute">
         <div class="settings-themes__themes" grid="2 md-4 lg-4">
             <div class="settings-themes__theme"
                 layout="row center-center"
@@ -22,6 +22,7 @@
 import ROUTES from '../../../constants/core/routes';
 
 import SettingsLayout from '../../../components/layouts/settings.vue';
+import { useI18n } from '../../../i18n';
 
 import {
     defineComponent,
@@ -43,8 +44,10 @@ export default defineComponent({
     components: {
         SettingsLayout
     },
-    
+
     setup() {
+        const { t } = useI18n();
+
         const backRoute = {
             name: ROUTES.settings.index
         };
@@ -62,6 +65,7 @@ export default defineComponent({
         }
 
         return {
+            t,
             backRoute,
             theme,
             themes,

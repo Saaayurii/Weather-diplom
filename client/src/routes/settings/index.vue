@@ -1,51 +1,51 @@
 <template>
     <settings-layout class="route settings-index">
         <div class="settings-index__body">
-            <block class="settings-index__block" title="Forecast">
+            <block class="settings-index__block" :title="t('settings.forecast.title')">
                 <div class="menu">
-                    <settings-item class="menu-item" label="Units" :value="unit.label">
+                    <settings-item class="menu-item" :label="t('settings.forecast.units')" :value="unit.label">
                         <select name="units" v-model="units">
                             <option v-for="(value, key) in unitOptions" :key="key" :value="key">{{ value.label }}</option>
                         </select>
                     </settings-item>
                     <router-link class="link--inherit" :to="routes.forecast.locations">
-                        <settings-item class="menu-item" label="Locations" :value="locationsLabel"></settings-item>
+                        <settings-item class="menu-item" :label="t('settings.forecast.locations')" :value="locationsLabel"></settings-item>
                     </router-link>
                     <router-link class="link--inherit" :to="routes.forecast.sections">
-                        <settings-item class="menu-item" label="Sections"></settings-item>
+                        <settings-item class="menu-item" :label="t('settings.forecast.sections')"></settings-item>
                     </router-link>
                 </div>
             </block>
-            <block class="settings-index__block" title="Maps">
+            <block class="settings-index__block" :title="t('settings.maps.title')">
                 <div class="menu">
-                    <settings-item class="menu-item" label="Default Map" :value="map.label">
+                    <settings-item class="menu-item" :label="t('settings.maps.defaultMap')" :value="map.label">
                         <select name="default-map" v-model="defaultMap">
                             <option v-for="(value, key) in mapOptions" :key="key" :value="key">{{ value.label }}</option>
                         </select>
                     </settings-item>
                     <router-link class="link--inherit" :to="routes.maps.display">
-                        <settings-item class="menu-item" label="Display"></settings-item>
+                        <settings-item class="menu-item" :label="t('settings.maps.display')"></settings-item>
                     </router-link>
-                    <settings-item class="menu-item" label="Framerate" :value="framerate">
+                    <settings-item class="menu-item" :label="t('settings.maps.framerate')" :value="framerate">
                         <select name="framerate" v-model="framerate">
                             <option v-for="value in framerates" :key="value" :value="value">{{ value }}ms</option>
                         </select>
                     </settings-item>
                 </div>
             </block>
-            <block class="settings-index__block" title="General">
+            <block class="settings-index__block" :title="t('settings.general.title')">
                 <div class="menu">
                     <router-link class="link--inherit" :to="routes.general.theme">
-                        <settings-item class="menu-item" label="Theme" :value="theme.core.name"></settings-item>
+                        <settings-item class="menu-item" :label="t('settings.general.theme')" :value="theme.core.name"></settings-item>
                     </router-link>
-                    <settings-item class="menu-item" label="Update" @click.native="updateApplication">
+                    <settings-item class="menu-item" :label="t('settings.general.update')" @click.native="updateApplication">
                         <template #value>
                             <loader v-if="updating"></loader>
                         </template>
                     </settings-item>
-                    <settings-item class="menu-item" label="Reset" @click.native="reset"></settings-item>
+                    <settings-item class="menu-item" :label="t('settings.general.reset')" @click.native="reset"></settings-item>
                     <router-link class="link--inherit" :to="routes.general.about">
-                        <settings-item class="menu-item" label="About"></settings-item>
+                        <settings-item class="menu-item" :label="t('settings.general.about')"></settings-item>
                     </router-link>
                 </div>
             </block>
@@ -60,6 +60,8 @@ import MAPS from '../../constants/maps/maps';
 
 import SettingsLayout from '../../components/layouts/settings.vue';
 import SettingsItem from '../../components/settings/settings-item.vue';
+
+import { useI18n } from '../../i18n';
 
 import {
     defineComponent,
@@ -89,8 +91,9 @@ export default defineComponent({
         SettingsLayout,
         SettingsItem
     },
-    
+
     setup() {
+        const { t } = useI18n();
         const updating = ref(false);
 
         const routes = {
@@ -150,7 +153,7 @@ export default defineComponent({
         const unit = computed(() => UNITS[state.settings.units]);
         const map = computed(() => MAPS[state.settings.maps.default]);
 
-        const locationsLabel = computed(() => `${state.settings.locations.length} saved`);
+        const locationsLabel = computed(() => `${state.settings.locations.length} ${t('settings.forecast.locationsSaved')}`);
 
         async function updateApplication() {
             const registration = await navigator.serviceWorker.getRegistration();
@@ -171,8 +174,8 @@ export default defineComponent({
         async function reset() {
             try {
                 await componentsController.confirm({
-                    message: 'This will reset all settings back to default. This cannot be undone. Do you wish to continue?',
-                    confirmLabel: 'Yes, Reset'
+                    message: t('settings.general.resetConfirm'),
+                    confirmLabel: t('settings.general.resetButton')
                 });
 
                 resetSettings();
@@ -182,6 +185,7 @@ export default defineComponent({
         }
 
         return {
+            t,
             routes,
             units,
             unit,
