@@ -47,9 +47,118 @@
 
 ## Запуск приложения
 
-### Требования
+### Вариант 1: Запуск с Docker (Рекомендуется)
+
+#### Требования
+- **Docker** версии 20.10 или выше
+- **Docker Compose** версии 1.29 или выше
+- **API ключи** от сервисов погодных данных (см. ниже)
+
+#### Быстрый старт с Docker
+
+1. Клонируйте репозиторий:
+```bash
+git clone <repository-url>
+cd Weather
+```
+
+2. Настройте переменные окружения:
+```bash
+cp client/.env.example client/.env
+```
+
+3. Откройте файл `client/.env` и вставьте ваши API ключи:
+```bash
+MAPBOX_API_KEY=ваш_ключ_mapbox
+OWM_API_KEY=ваш_ключ_openweathermap
+WORLDTIDES_API_KEY=ваш_ключ_worldtides
+GA_TRACKING_ID=
+SENTRY_DSN=
+```
+
+4. Запустите приложение с помощью Docker Compose:
+```bash
+docker-compose up -d
+```
+
+Приложение будет доступно по адресу: http://localhost:3000
+
+#### Управление Docker контейнером
+
+Остановить приложение:
+```bash
+docker-compose down
+```
+
+Просмотр логов:
+```bash
+docker-compose logs -f weather-app
+```
+
+Пересобрать образ после изменений:
+```bash
+docker-compose up -d --build
+```
+
+Остановить и удалить контейнеры с volumes:
+```bash
+docker-compose down -v
+```
+
+#### Альтернативный запуск через Docker (без Compose)
+
+Сборка образа:
+```bash
+docker build -t weather-app .
+```
+
+Запуск контейнера:
+```bash
+docker run -d \
+  --name weather-app \
+  -p 3000:3000 \
+  --env-file ./client/.env \
+  weather-app
+```
+
+### Вариант 2: Локальная разработка
+
+#### Требования
 - **Node.js** версии 16.x или выше (рекомендуется v22.12.0)
 - **Yarn** package manager
+- **API ключи** от сервисов погодных данных (см. ниже)
+
+### Настройка переменных окружения
+
+Для работы приложения необходимы API ключи от следующих сервисов:
+
+1. Скопируйте файл `.env.example` в `.env` в папке `client/`:
+```bash
+cp client/.env.example client/.env
+```
+
+2. Получите API ключи:
+   - **MAPBOX_API_KEY** (обязательно) - для отображения карт
+     Получить: https://www.mapbox.com/
+
+   - **OWM_API_KEY** (обязательно) - для данных о погоде и карт осадков/температуры
+     Получить: https://openweathermap.org/api
+
+   - **WORLDTIDES_API_KEY** (обязательно) - для данных о приливах и отливах
+     Получить: https://www.worldtides.info/developer
+
+   - **GA_TRACKING_ID** (опционально) - для Google Analytics
+
+   - **SENTRY_DSN** (опционально) - для отслеживания ошибок
+
+3. Откройте файл `client/.env` и вставьте полученные ключи:
+```bash
+MAPBOX_API_KEY=ваш_ключ_mapbox
+OWM_API_KEY=ваш_ключ_openweathermap
+WORLDTIDES_API_KEY=ваш_ключ_worldtides
+GA_TRACKING_ID=
+SENTRY_DSN=
+```
 
 ### Установка зависимостей
 ```bash
@@ -72,6 +181,7 @@ yarn build
 - Флаг `--openssl-legacy-provider` необходим для совместимости с Node.js v17+
 - Приложение использует Dart Sass вместо устаревшего node-sass
 - При первом запуске могут появиться deprecation warnings - это нормально и не влияет на работу приложения
+- Без API ключей приложение не сможет загружать данные о погоде и отображать карты
 
 ## Философия
 Цель данного проекта - удовлетворить следующим требованиям:

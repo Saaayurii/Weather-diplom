@@ -14,7 +14,7 @@ const currentLocale = ref<Locale>('ru');
 
 // Get nested property from object using dot notation
 function getNestedProperty(obj: any, path: string): any {
-    return path.split('.').reduce((current, key) => current?.[key], obj);
+    return path.split('.').reduce((current, key) => current && current[key], obj);
 }
 
 // Translation function

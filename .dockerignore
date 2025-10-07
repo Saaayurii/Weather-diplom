@@ -1,0 +1,55 @@
+# Зависимости
+node_modules
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# Локальные файлы окружения (будут монтироваться через docker-compose)
+.env
+.env.local
+.env.*.local
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Тесты
+coverage
+*.test.js
+*.spec.js
+__tests__
+
+# Документация
+README.md
+docs
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# CI/CD
+.github
+.gitlab-ci.yml
+.travis.yml
+
+# Сборка (будет создаваться в контейнере)
+dist
+build
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Временные файлы
+*.tmp
+*.temp

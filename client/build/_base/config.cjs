@@ -1,39 +1,19 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { createRequire } from 'module';
+const path = require('path');
 
-// Fallback for compatibility with older babel-register
-let __filename, __dirname, require;
-try {
-    __filename = fileURLToPath(import.meta.url);
-    __dirname = path.dirname(__filename);
-    require = createRequire(import.meta.url);
-} catch (e) {
-    // Fallback to CommonJS-style __dirname when import.meta is not available
-    __filename = typeof __filename !== 'undefined' ? __filename : '';
-    __dirname = typeof __dirname !== 'undefined' ? __dirname : process.cwd() + '/client/build/_base';
-    require = typeof require !== 'undefined' ? require : global.require || eval('require');
-}
+// __dirname уже доступен в CommonJS контексте
 
 // Загрузка переменных окружения из .env файла
 const dotenv = require('dotenv');
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
-import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
+const webpack = require('webpack');
 
-import {
-    CleanWebpackPlugin
-} from 'clean-webpack-plugin';
-
-import {
-    VueLoaderPlugin
-} from 'vue-loader';
-
-import webpack from 'webpack';
-
-export default {
+module.exports = {
 
     stats: 'minimal',
 
@@ -53,7 +33,7 @@ export default {
     resolve: {
         extensions: ['.ts', '.js'],
 
-        alias: {           
+        alias: {
             'components': path.resolve(__dirname, '../src/components'),
             'constants': path.resolve(__dirname, '../src/constants'),
             'controllers': path.resolve(__dirname, '../src/controllers'),
@@ -95,7 +75,7 @@ export default {
     },
 
     plugins: [
-        
+
         new webpack.EnvironmentPlugin({
             'MAPBOX_API_KEY': '',
             'WORLDTIDES_API_KEY': '',
@@ -103,44 +83,45 @@ export default {
             'GA_TRACKING_ID': '',
             'SENTRY_DSN': '',
         }),
-        
+
         new webpack.DefinePlugin({
-            '__VUE_OPTIONS_API__': false, 
-            '__VUE_PROD_DEVTOOLS__': false 
+            '__VUE_OPTIONS_API__': false,
+            '__VUE_PROD_DEVTOOLS__': false
         }),
-        
+
         new CleanWebpackPlugin(),
-    
+
         new VueLoaderPlugin(),
-    
+
         new HtmlWebpackPlugin({
             title: 'Ocula',
             template: './src/index.ejs'
         }),
-    
-        new FaviconsWebpackPlugin({
-            logo: './src/assets/images/logo/logo-512.svg',
-            favicons: {
-                appName: 'Ocula',
-                appShortName: 'Ocula',
-                appDescription: 'The open-source, progressive weather app',
-                developerName: 'Andrew Courtice',
-                display: 'standalone',
-                background: '#FFFFFF',
-                theme_color: '#FFFFFF',
-                appleStatusBarStyle: 'default',
-                start_url: '/?source=pwa',
-                scope: '/',
-                icons: {
-                    android: true,
-                    appleIcon: true,
-                    appleStartup: true,
-                    favicons: true,
-                    firefox: true,
-                    windows: true
-                }
-            }
-        }),
+
+        // FaviconsWebpackPlugin отключен из-за проблем с sharp в Docker
+        // new FaviconsWebpackPlugin({
+        //     logo: './src/assets/images/logo/logo-512.svg',
+        //     favicons: {
+        //         appName: 'Ocula',
+        //         appShortName: 'Ocula',
+        //         appDescription: 'The open-source, progressive weather app',
+        //         developerName: 'Andrew Courtice',
+        //         display: 'standalone',
+        //         background: '#FFFFFF',
+        //         theme_color: '#FFFFFF',
+        //         appleStatusBarStyle: 'default',
+        //         start_url: '/?source=pwa',
+        //         scope: '/',
+        //         icons: {
+        //             android: true,
+        //             appleIcon: true,
+        //             appleStartup: true,
+        //             favicons: true,
+        //             firefox: true,
+        //             windows: true
+        //         }
+        //     }
+        // }),
 
         new CopyWebpackPlugin([
             './src/static'
