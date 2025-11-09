@@ -17,13 +17,16 @@
 3. Найдите раздел **Environment Variables**
 4. Добавьте каждую переменную по отдельности:
 
-### Обязательные переменные (добавьте ВСЕ три):
+### Обязательные переменные (добавьте ВСЕ четыре):
 
 | Key (Название) | Value (Значение) | Environment |
 |----------------|------------------|-------------|
 | `NEXT_PUBLIC_OPEN_WEATHER_API_KEY` | `60b86f5b92cd26bc6464fbd711568d44` | Production, Preview, Development |
 | `NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN` | `pk.eyJ1Ijoic2F5dXJpaWkiLCJhIjoiY21ocm1nMTUxMHl6eDJpczQ0azgwbTA5NSJ9._PvbqROoQdgV18hTsCuoYQ` | Production, Preview, Development |
 | `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` | `AIzaSyBEwWrU2M35pry2JBp4NzpcT9W5RBduBKc` | Production, Preview, Development |
+| `VERCEL_URL` | (оставьте пустым - Vercel установит автоматически) | Не добавляйте вручную |
+
+**Примечание:** `VERCEL_URL` устанавливается Vercel автоматически и содержит URL текущего деплоя.
 
 **Важно:** Выберите все три окружения (Production, Preview, Development) для каждой переменной!
 
