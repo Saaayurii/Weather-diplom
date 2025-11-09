@@ -1,14 +1,16 @@
-import { getBaseUrl } from "@/lib/utils/getBaseUrl"
-
 export const getUVData = async ({ lat, lon }: { lat: string; lon: string }) => {
-  const baseUrl = getBaseUrl()
-  const data = await fetch(
-    `${baseUrl}/api/weather/uv_index?lat=${lat}&lon=${lon}`
+  const res = await fetch(
+    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=uv_index_max,uv_index_clear_sky_max&timezone=auto&forecast_days=1`,
+    {
+      next: { revalidate: 900 },
+    }
   )
 
-  if (!data.ok) {
-    throw new Error("Failed to fetch data")
+  if (!res.ok) {
+    const errorText = await res.text()
+    console.error("Open-Meteo API Error:", res.status, errorText)
+    throw new Error(`Open-Meteo API error: ${res.status}`)
   }
 
-  return data.json()
+  return res.json()
 }

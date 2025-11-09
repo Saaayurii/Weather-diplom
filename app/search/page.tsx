@@ -23,12 +23,40 @@ export async function generateMetadata({
   searchParams: searchParamsProps
 }): Promise<Metadata> {
   const { lat, lon } = searchParams
-  const url = `https://${process.env.VERCEL_URL}/api/weather/hourly?lat=${lat}&lon=${lon}&appid=${process.env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY}`
-  const data = await fetch(url).then((res) => res.json())
+  const appid = process.env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY
+  const HOURS = 23
 
-  return {
-    title: `${data.city.name} - Weather Forecast`,
-    description: `${data.city.name} weather forecast with current conditions, wind, air quality, and what to expect for the next 3 days.`,
+  if (!appid) {
+    return {
+      title: "Weather Forecast",
+      description: "Weather forecast application",
+    }
+  }
+
+  try {
+    const res = await fetch(
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&cnt=${HOURS}&units=metric&appid=${appid}`,
+      { next: { revalidate: 900 } }
+    )
+
+    if (!res.ok) {
+      return {
+        title: "Weather Forecast",
+        description: "Weather forecast application",
+      }
+    }
+
+    const data = await res.json()
+
+    return {
+      title: `${data.city.name} - Weather Forecast`,
+      description: `${data.city.name} weather forecast with current conditions, wind, air quality, and what to expect for the next 3 days.`,
+    }
+  } catch (error) {
+    return {
+      title: "Weather Forecast",
+      description: "Weather forecast application",
+    }
   }
 }
 
