@@ -9,7 +9,7 @@ export const getHourlyData = async ({
 }) => {
   const baseUrl = getBaseUrl()
   const data = await fetch(
-    `${baseUrl}/api/weather/hourly?lat=${lat}&lon=${lon}&appid=${process.env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY}`
+    `${baseUrl}/api/weather/hourly?lat=${lat}&lon=${lon}`
   )
   if (!data.ok) {
     throw new Error("Failed to fetch data")

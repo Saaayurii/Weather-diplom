@@ -9,7 +9,7 @@ export const getTenDayForecast = async ({
 }) => {
   const baseUrl = getBaseUrl()
   const data = await fetch(
-    `${baseUrl}/api/weather/daily_forecast?lat=${lat}&lon=${lon}&appid=${process.env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY}`
+    `${baseUrl}/api/weather/daily_forecast?lat=${lat}&lon=${lon}`
   )
   if (!data.ok) {
     throw new Error("Failed to fetch data")
