@@ -16,14 +16,19 @@ export async function GET(request: Request) {
   }
 
   const res = await fetch(
-    `https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&cnt=${HOURS}&units=metric&appid=${appid}`,
+    `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&cnt=${HOURS}&units=metric&appid=${appid}`,
     {
       next: { revalidate: 900 },
     }
   )
 
   if (!res.ok) {
-    throw new Error("Failed to fetch data")
+    const errorText = await res.text()
+    console.error("OpenWeather API Error:", res.status, errorText)
+    return Response.json(
+      { message: `OpenWeather API error: ${res.status} - ${errorText}` },
+      { status: res.status }
+    )
   }
 
   const data = await res.json()

@@ -16,7 +16,6 @@ import { DEFAULT_LOCATION } from "@/lib/config"
 import { useTheme } from "next-themes"
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
-const OPENWEATHERMAP_TOKEN = process.env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY
 
 export default function Map() {
   const { theme } = useTheme()
@@ -39,33 +38,36 @@ export default function Map() {
     return [latNumber, lonNumber]
   }, [lat, lon])
 
-  const weatherTiles = useMemo(() => {
+  const weatherLayers = useMemo(() => {
     return [
-      { label: "Temperature (°C)", code: "TA2" },
-      { label: "Precipitation Intensity (mm/s)", code: "PR0" },
-      { label: "Wind Speed and Direction (m/s)", code: "WND" },
-      { label: "Relative Humidity (%)", code: "HRD0" },
-      { label: "Cloudiness (%)", code: "CL" },
-      { label: "Atmospheric Pressure (hPa)", code: "APM" },
+      { label: "Без слоя", code: "none" },
+      { label: "Осадки (радар)", code: "radar" },
+      { label: "Облака (спутник)", code: "satellite" },
     ]
   }, [])
-
-  const weatherLayer: LayerProps = {
-    id: "weatherLayer",
-    type: "raster",
-    minzoom: 0,
-    maxzoom: 15,
-  }
 
   const [viewport, setViewport] = useState({
     latitude: lat ? Number(lat) : Number(defaultLat),
     longitude: lon ? Number(lon) : Number(defaultLon),
     zoom: 7,
-    pitch: 60,
-    bearing: -60,
   })
 
-  const [MapCode, setMapCode] = useState("PR0")
+  const [selectedLayer, setSelectedLayer] = useState("radar")
+  const [rainViewerTimestamp, setRainViewerTimestamp] = useState<number | null>(null)
+
+  // Загрузка последнего снимка радара RainViewer
+  useEffect(() => {
+    fetch("https://api.rainviewer.com/public/weather-maps.json")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.radar?.past && data.radar.past.length > 0) {
+          // Берем последний доступный снимок
+          const lastTimestamp = data.radar.past[data.radar.past.length - 1].time
+          setRainViewerTimestamp(lastTimestamp)
+        }
+      })
+      .catch((error) => console.error("RainViewer API error:", error))
+  }, [])
 
   useEffect(() => {
     setViewport((prevViewport) => ({
@@ -75,18 +77,34 @@ export default function Map() {
     }))
   }, [lat, lon, defaultLat, defaultLon])
 
+  const rainLayer: LayerProps = {
+    id: "rainLayer",
+    type: "raster",
+    paint: {
+      "raster-opacity": 0.6,
+    },
+  }
+
+  const satelliteLayer: LayerProps = {
+    id: "satelliteLayer",
+    type: "raster",
+    paint: {
+      "raster-opacity": 0.5,
+    },
+  }
+
   return (
     <Card className="order-11 col-span-2 h-[25rem] overflow-hidden overscroll-contain  p-0 md:p-0 xl:col-span-3">
       <div className="absolute right-0 z-10 m-2">
-        <Select value={MapCode} onValueChange={setMapCode}>
-          <SelectTrigger aria-label="Map layer" className="w-fit">
-            <SelectValue placeholder="Map Layers" />
+        <Select value={selectedLayer} onValueChange={setSelectedLayer}>
+          <SelectTrigger aria-label="Слой карты" className="w-fit">
+            <SelectValue placeholder="Слои карты" />
           </SelectTrigger>
           <SelectContent align="end">
             <SelectGroup>
-              {weatherTiles.map((tile) => (
-                <SelectItem key={tile.code} value={tile.code}>
-                  {tile.label}
+              {weatherLayers.map((layer) => (
+                <SelectItem key={layer.code} value={layer.code}>
+                  {layer.label}
                 </SelectItem>
               ))}
             </SelectGroup>
@@ -96,6 +114,7 @@ export default function Map() {
       <ReactMapGL
         reuseMaps
         {...viewport}
+        onMove={(evt) => setViewport(evt.viewState)}
         attributionControl={false}
         mapboxAccessToken={MAPBOX_TOKEN}
         mapStyle={`mapbox://styles/mapbox/${MapTheme}-v11`}
@@ -108,18 +127,37 @@ export default function Map() {
           left: "0",
           zIndex: 0,
         }}
+        dragRotate={true}
+        dragPan={true}
+        scrollZoom={true}
+        touchZoomRotate={true}
+        doubleClickZoom={true}
+        keyboard={true}
       >
-        <Source
-          key={MapCode}
-          id="weatherSource"
-          type="raster"
-          tiles={[
-            `https://maps.openweathermap.org/maps/2.0/weather/${MapCode}/{z}/{x}/{y}?appid=${OPENWEATHERMAP_TOKEN}`,
-          ]}
-          tileSize={256}
-        >
-          <Layer {...weatherLayer} />
-        </Source>
+        {selectedLayer === "radar" && rainViewerTimestamp && (
+          <Source
+            id="rainViewerSource"
+            type="raster"
+            tiles={[
+              `https://tilecache.rainviewer.com/v2/radar/${rainViewerTimestamp}/256/{z}/{x}/{y}/2/1_1.png`,
+            ]}
+            tileSize={256}
+          >
+            <Layer {...rainLayer} />
+          </Source>
+        )}
+        {selectedLayer === "satellite" && rainViewerTimestamp && (
+          <Source
+            id="satelliteSource"
+            type="raster"
+            tiles={[
+              `https://tilecache.rainviewer.com/v2/coverage/${rainViewerTimestamp}/256/{z}/{x}/{y}/0/0_0.png`,
+            ]}
+            tileSize={256}
+          >
+            <Layer {...satelliteLayer} />
+          </Source>
+        )}
       </ReactMapGL>
     </Card>
   )

@@ -1,6 +1,9 @@
+import { getBaseUrl } from "@/lib/utils/getBaseUrl"
+
 export const getUVData = async ({ lat, lon }: { lat: string; lon: string }) => {
+  const baseUrl = getBaseUrl()
   const data = await fetch(
-    `https://${process.env.VERCEL_URL}/api/weather/uv_index?lat=${lat}&lon=${lon}`
+    `${baseUrl}/api/weather/uv_index?lat=${lat}&lon=${lon}`
   )
 
   if (!data.ok) {

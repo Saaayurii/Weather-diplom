@@ -62,14 +62,14 @@ export default function WeatherWidgets({
                 />
               </svg>
             </i>
-            Sunset
+            Закат
           </CardTitle>
         </CardHeader>
         <CardContent>
           <p>{formatSunTimeWithAMPM(city.sunset, city.timezone)}</p>
         </CardContent>
         <CardFooter>
-          <p>Sunrise: {formatSunTimeWithAMPM(city.sunrise, city.timezone)}</p>
+          <p>Восход: {formatSunTimeWithAMPM(city.sunrise, city.timezone)}</p>
         </CardFooter>
       </Card>
       <Card className="order-4 h-48 xl:order-3">
@@ -106,7 +106,7 @@ export default function WeatherWidgets({
                 />
               </svg>
             </i>
-            Wind
+            Ветер
           </CardTitle>
         </CardHeader>
         <CardContent className="flex justify-center p-0">
@@ -137,7 +137,7 @@ export default function WeatherWidgets({
                 />
               </svg>
             </i>
-            UV Index
+            УФ-индекс
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -145,22 +145,22 @@ export default function WeatherWidgets({
             {Math.round(uvIndexForToday)}
             <br></br>
             {uvIndexForToday <= 2
-              ? "Low"
+              ? "Низкий"
               : uvIndexForToday <= 5
-              ? "Moderate"
+              ? "Умеренный"
               : uvIndexForToday <= 7
-              ? "High"
-              : "Very High"}
+              ? "Высокий"
+              : "Очень высокий"}
           </p>
-          <Progress aria-label="UV Index" value={uvIndexForToday * 10} />
+          <Progress aria-label="УФ-индекс" value={uvIndexForToday * 10} />
         </CardContent>
         <CardFooter>
           <p>
             {uvIndexForToday <= 2
-              ? "No protection needed."
+              ? "Защита не требуется."
               : uvIndexForToday <= 5
-              ? "Wear sunscreen."
-              : "Take precautions."}
+              ? "Используйте солнцезащитный крем."
+              : "Примите меры предосторожности."}
           </p>
         </CardFooter>
       </Card>
@@ -236,23 +236,23 @@ export default function WeatherWidgets({
                 />
               </svg>
             </i>
-            Precipitation
+            Осадки
           </CardTitle>
         </CardHeader>
         <CardContent>
           <p>
-            {data.rain?.["1h"] || 0}mm <br></br>in the last 3h
+            {data.rain?.["1h"] || 0}мм <br></br>за последние 3ч
           </p>
         </CardContent>
         <CardFooter>
           <p>
             {data.rain?.["1h"] !== undefined
               ? data.rain["1h"] <= 0.2
-                ? "Light rain or drizzle. An umbrella may come in handy."
+                ? "Лёгкий дождь или морось. Может пригодиться зонт."
                 : data.rain["1h"] <= 2.5
-                ? "Moderate rain."
-                : "Heavy rain."
-              : "Conditions are dry."}
+                ? "Умеренный дождь."
+                : "Сильный дождь."
+              : "Сухая погода."}
           </p>
         </CardFooter>
       </Card>
@@ -273,7 +273,7 @@ export default function WeatherWidgets({
                 <path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z" />
               </svg>
             </i>
-            Feels like
+            Ощущается как
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -282,10 +282,10 @@ export default function WeatherWidgets({
         <CardFooter>
           <p>
             {data.main.feels_like < data.main.temp
-              ? "Feels colder than the actual temperature."
+              ? "Ощущается холоднее фактической температуры."
               : data.main.feels_like > data.main.temp
-              ? "Feels warmer than the actual temperature."
-              : "Feels like the actual temperature."}
+              ? "Ощущается теплее фактической температуры."
+              : "Ощущается как фактическая температура."}
           </p>
         </CardFooter>
       </Card>
@@ -306,19 +306,19 @@ export default function WeatherWidgets({
                 />
               </svg>
             </i>
-            Humidity
+            Влажность
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p>74&deg;</p>
+          <p>{data.main.humidity}%</p>
         </CardContent>
         <CardFooter>
           <p>
             {data.main.humidity < 40
-              ? "Low humidity. It might feel dry."
+              ? "Низкая влажность. Может быть сухо."
               : data.main.humidity < 70
-              ? "Moderate humidity. Comfortable conditions."
-              : "High humidity. It might feel humid and uncomfortable."}
+              ? "Умеренная влажность. Комфортные условия."
+              : "Высокая влажность. Может быть душно и некомфортно."}
           </p>
         </CardFooter>
       </Card>
@@ -343,19 +343,19 @@ export default function WeatherWidgets({
                 />
               </svg>
             </i>
-            Visibility
+            Видимость
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p>{data.visibility / 1000} km</p>
+          <p>{data.visibility / 1000} км</p>
         </CardContent>
         <CardFooter>
           <p>
             {data.visibility >= 10
-              ? "It's perfectly clear right now."
+              ? "Отличная видимость."
               : data.visibility >= 5
-              ? "Good visibility."
-              : "Poor visibility. Exercise caution while driving or moving around."}
+              ? "Хорошая видимость."
+              : "Плохая видимость. Будьте осторожны при вождении."}
           </p>
         </CardFooter>
       </Card>
@@ -377,19 +377,19 @@ export default function WeatherWidgets({
                 <path d="M3.34 19a10 10 0 1 1 17.32 0" />
               </svg>
             </i>
-            Pressure
+            Давление
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p>{data.main.pressure} hPa</p>
+          <p>{data.main.pressure} гПа</p>
         </CardContent>
         <CardFooter>
           <p>
             {data.main.pressure < 1000
-              ? "Low pressure. Expect changes in the weather."
+              ? "Низкое давление. Ожидайте изменений погоды."
               : data.main.pressure >= 1000 && data.main.pressure <= 1010
-              ? "Normal pressure. Typical weather conditions."
-              : "High pressure. Expect stable and clear weather."}
+              ? "Нормальное давление. Типичные погодные условия."
+              : "Высокое давление. Ожидайте стабильную и ясную погоду."}
           </p>
         </CardFooter>
       </Card>

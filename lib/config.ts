@@ -1,70 +1,102 @@
 import { Location } from "./types"
 
 export const DEFAULT_LOCATION: Location = {
-  city: "Copenhagen",
+  city: "Донецк",
   coord: {
-    lat: "55.6760968",
-    lon: "12.5683371",
+    lat: "48.0159",
+    lon: "37.8029",
   },
 }
 
 export const DEFAULT_SUGGESTIONS = [
   {
-    description: "London, United Kingdom",
+    description: "Донецк, Россия",
   },
   {
-    description: "Paris, France",
+    description: "Москва, Россия",
   },
   {
-    description: "Amsterdam, Netherlands",
+    description: "Ростов-на-Дону, Россия",
   },
   {
-    description: "Dublin, Ireland",
+    description: "Луганск, Россия",
   },
   {
-    description: "Lisbon, Portugal",
+    description: "Волгоград, Россия",
   },
 ]
 
 export const OTHER_LARGE_CITIES = [
   {
-    city: "New York",
-    country: "United States",
+    city: "Донецк",
+    country: "Россия",
     coord: {
-      lat: 40.7127753,
-      lon: -74.0059728,
+      lat: 48.0159,
+      lon: 37.8029,
     },
   },
   {
-    city: "Shanghai",
-    country: "China",
+    city: "Енакиево",
+    country: "Россия",
     coord: {
-      lat: 31.2222226,
-      lon: 121.458069,
+      lat: 48.2258,
+      lon: 38.2072,
     },
   },
   {
-    city: "Tokyo",
-    country: "Japan",
+    city: "Ясиноватая",
+    country: "Россия",
     coord: {
-      lat: 35.6764225,
-      lon: 139.650027,
+      lat: 48.1297,
+      lon: 37.8619,
     },
   },
   {
-    city: "Sydney",
-    country: "Australia",
+    city: "Горловка",
+    country: "Россия",
     coord: {
-      lat: -33.8688197,
-      lon: 151.2092955,
+      lat: 48.3033,
+      lon: 38.0508,
     },
   },
   {
-    city: "São Paulo",
-    country: "Brazil",
+    city: "Луганск",
+    country: "Россия",
     coord: {
-      lat: -23.5475493,
-      lon: -46.6358888,
+      lat: 48.5740,
+      lon: 39.3078,
+    },
+  },
+  {
+    city: "Москва",
+    country: "Россия",
+    coord: {
+      lat: 55.7558,
+      lon: 37.6173,
+    },
+  },
+  {
+    city: "Ростов-на-Дону",
+    country: "Россия",
+    coord: {
+      lat: 47.2357,
+      lon: 39.7015,
+    },
+  },
+  {
+    city: "Таганрог",
+    country: "Россия",
+    coord: {
+      lat: 47.2362,
+      lon: 38.8969,
+    },
+  },
+  {
+    city: "Волгоград",
+    country: "Россия",
+    coord: {
+      lat: 48.7080,
+      lon: 44.5133,
     },
   },
 ]

@@ -55,8 +55,8 @@ export default function CurrentWeather({ data, city }: CurrentWeatherProps) {
         />
         <div className="font-semibold">{data.weather[0].main}</div>
         <div className="flex gap-2 dark:text-neutral-500">
-          <span>H: {Math.round(data.main.temp_max)}&deg;</span>
-          <span>L: {Math.round(data.main.temp_min)}&deg;</span>
+          <span>Макс: {Math.round(data.main.temp_max)}&deg;</span>
+          <span>Мин: {Math.round(data.main.temp_min)}&deg;</span>
         </div>
       </div>
     </Card>

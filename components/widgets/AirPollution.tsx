@@ -72,25 +72,25 @@ export default function AirPollution({
               />
             </svg>
           </i>
-          Air pollution
+          Загрязнение воздуха
         </CardTitle>
       </CardHeader>
       <CardContent className="my-auto">
-        <Progress aria-label="Air pollution" value={airQuality.main.aqi * 10} />
+        <Progress aria-label="Загрязнение воздуха" value={airQuality.main.aqi * 10} />
       </CardContent>
       <CardFooter>
         <p>
           {airQuality.main.aqi < 50
-            ? "Air quality is good."
+            ? "Качество воздуха хорошее."
             : airQuality.main.aqi < 100
-            ? "Air quality is moderate."
+            ? "Качество воздуха умеренное."
             : airQuality.main.aqi < 150
-            ? "Air quality is unhealthy for sensitive groups."
+            ? "Качество воздуха вредно для чувствительных групп."
             : airQuality.main.aqi < 200
-            ? "Air quality is unhealthy."
+            ? "Качество воздуха вредное."
             : airQuality.main.aqi < 300
-            ? "Air quality is very unhealthy."
-            : "Air quality is hazardous."}
+            ? "Качество воздуха очень вредное."
+            : "Качество воздуха опасное."}
         </p>
       </CardFooter>
     </Card>

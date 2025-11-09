@@ -7,7 +7,7 @@ export function convertToDate(
   let local_time = new Date(utc_time.getTime() + timezone * 1000)
 
   const options = { weekday: weekdayFormat }
-  const dateFormatter = new Intl.DateTimeFormat("UTC", options)
+  const dateFormatter = new Intl.DateTimeFormat("ru-RU", options)
 
   return dateFormatter.format(local_time)
 }
@@ -17,11 +17,11 @@ export function formatSunTimeWithAMPM(
   timezoneOffset: number
 ): string {
   const date = new Date((timestamp + timezoneOffset) * 1000)
-  const formattedTime = new Intl.DateTimeFormat("en-US", {
+  const formattedTime = new Intl.DateTimeFormat("ru-RU", {
     timeZone: "UTC",
-    hour: "numeric",
+    hour: "2-digit",
     minute: "2-digit",
-    hour12: true,
+    hour12: false,
   }).format(date)
   return formattedTime
 }

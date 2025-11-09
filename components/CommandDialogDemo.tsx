@@ -78,7 +78,7 @@ export function CommandDialogDemo() {
         className="h-9 w-full whitespace-nowrap px-4"
       >
         <p className="text-sm text-muted-foreground">
-          Search city...{" "}
+          Поиск города...{" "}
           <kbd className="pointer-events-none ml-auto inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 hover:bg-primary md:ml-28">
             <span className="text-xs">⌘</span>J
           </kbd>
@@ -86,14 +86,14 @@ export function CommandDialogDemo() {
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput
-          placeholder="Search city..."
+          placeholder="Поиск города..."
           value={value}
           onValueChange={setValue}
           disabled={!ready}
         />
         <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Suggestions">
+          <CommandEmpty>Результаты не найдены.</CommandEmpty>
+          <CommandGroup heading="Предложения">
             {!data.length && (
               <>
                 {suggestions.map((suggestion, i) => (
